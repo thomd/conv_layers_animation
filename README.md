@@ -1,12 +1,20 @@
 # Animation for Convolutional layers
 ## Input Parameters:
 ```
-input_sz:     Size of the input feature map
-kernel_sz =   Size of the kernel/filter
-stride =      Stride length
-padding_sz =  Amount of zero padding
-layer_type =  Either 'conv' for standard convolutional layer or 'transposed_conv' for transposed convolutional layer
-duration = Duration (in seconds) between gif frames
+> ./main.py -h
+
+usage: main.py [-h] [-i INPUT] [-k KERNEL] [-s STRIDE] [-p PADDING]
+               [-t {t_conv,conv}]
+
+Generate animation of standard and transposed convolutional layers
+
+optional arguments:
+  -h, --help                              show this help message and exit
+  -i INPUT, --input INPUT                 input size (default: 3)
+  -k KERNEL, --kernel KERNEL              kernel size (default: 3)
+  -s STRIDE, --stride STRIDE              stride (default: 2)
+  -p PADDING, --padding PADDING           padding (default: 1)
+  -t {t_conv,conv}, --type {t_conv,conv}  layer type (default: t_conv)
 ```
 
 ## Results
