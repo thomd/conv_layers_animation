@@ -13,7 +13,7 @@ from matplotlib.colors import ListedColormap
 def fig2img(fig):
     fig.canvas.draw()
     w, h = fig.canvas.get_width_height()
-    buffer = np.fromstring(fig.canvas.tostring_argb(), dtype=np.uint8)
+    buffer = np.frombuffer(fig.canvas.tostring_argb(), dtype=np.uint8)
     buffer.shape = (w, h, 4)
     buffer = np.roll(buffer, 3, axis=2)
     w, h, d = buffer.shape
