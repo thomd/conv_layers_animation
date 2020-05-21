@@ -21,7 +21,7 @@ def fig2img(fig):
     return Image.frombytes("RGBA", (w, h), buffer.tostring())
 
 
-def run_animation(output_sz, input_sz, duration, layer_type, padding_sz, actual_padding_sz, stride, actual_stride, kernel_sz, kernel):
+def run_animation(output_sz, new_input_sz, duration, layer_type, padding_sz, actual_padding_sz, stride, actual_stride, kernel_sz, kernel):
     annot = False
     if output_sz == int(output_sz):
         output_sz = int(output_sz)
@@ -36,9 +36,9 @@ def run_animation(output_sz, input_sz, duration, layer_type, padding_sz, actual_
                 time.sleep(duration)
                 axes[0].clear()
                 axes[1].clear()
-                plt.suptitle("Stride: " + str(actual_stride) + "  Padding: " + str(actual_padding_sz), fontsize=10)
+                plt.suptitle(f"Stride: {actual_stride}, Padding: {actual_padding_sz}", fontsize=10)
                 # Input and Kernel
-                array_cmap = np.asarray(["#DD8047", "#CD8B67", "#A6A6A6", "#94B6D2"])
+                array_cmap = np.asarray(["#DD8047", "#CD8B67", "#A6A6A6", "#6abcff"])
                 cmap_indices = np.asarray(np.sort(list(set(np.unique(kernel + padded_input)))) + 2)
                 cmap_val = array_cmap[cmap_indices]
                 cmap = ListedColormap(cmap_val)
@@ -49,16 +49,16 @@ def run_animation(output_sz, input_sz, duration, layer_type, padding_sz, actual_
 
                 sns.heatmap(plot_vals, yticklabels=False, xticklabels=False, ax=axes[0], annot=annot, cbar=False, linewidth=0.5, cmap=cmap)
 
-                axes[0].set_xlabel("Input", fontdict={"fontsize": 10})
+                axes[0].set_xlabel(f"Input ({input_sz},{input_sz})", fontdict={"fontsize": 10})
                 # Output
                 y[i, j] = 0
                 sns.heatmap(np.sign(y), yticklabels=False, xticklabels=False, ax=axes[1], annot=annot, cbar=False, linewidth=0.5, cmap=ListedColormap(["#A5Ab81", "#DBDDCD"]))
 
-                axes[1].set_xlabel("Output", fontdict={"fontsize": 10})
+                axes[1].set_xlabel(f"Output ({output_sz},{output_sz})", fontdict={"fontsize": 10})
                 img.append(fig2img(fig))
                 shift_num = stride
-                if (j * (stride) + kernel_sz) >= (input_sz + 2 * padding_sz):
-                    shift_num = kernel_sz + (stride - 1) * (input_sz + 2 * padding_sz)
+                if (j * (stride) + kernel_sz) >= (new_input_sz + 2 * padding_sz):
+                    shift_num = kernel_sz + (stride - 1) * (new_input_sz + 2 * padding_sz)
                 kernel = np.roll(kernel, shift_num)
 
         kargs = {"duration": duration}
@@ -73,7 +73,7 @@ fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(5, 2.5))
 # Set the parameters
 input_sz = 3
 kernel_sz = 3
-stride = 2
+stride = 3
 padding_sz = 1
 duration = 0.4
 layer_type = "transposed_conv"
