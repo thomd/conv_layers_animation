@@ -67,7 +67,7 @@ def run_animation(output_sz, input_sz, duration, layer_type, padding_sz, actual_
         print("Set the parameters")
 
 
-fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(10, 5))
+fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(5, 2.5))
 # fig.tight_layout()
 
 # Set the parameters
