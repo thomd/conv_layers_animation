@@ -36,7 +36,7 @@ def run_animation(output_sz, input_sz, duration, layer_type, padding_sz, actual_
                 time.sleep(duration)
                 axes[0].clear()
                 axes[1].clear()
-                plt.suptitle("Type: " + str(layer_type) + "  -  Stride: " + str(actual_stride) + "  Padding: " + str(actual_padding_sz), fontsize=20, fontname="cmr10")
+                plt.suptitle("Stride: " + str(actual_stride) + "  Padding: " + str(actual_padding_sz), fontsize=10)
                 # Input and Kernel
                 array_cmap = np.asarray(["#DD8047", "#CD8B67", "#A6A6A6", "#94B6D2"])
                 cmap_indices = np.asarray(np.sort(list(set(np.unique(kernel + padded_input)))) + 2)
@@ -49,12 +49,12 @@ def run_animation(output_sz, input_sz, duration, layer_type, padding_sz, actual_
 
                 sns.heatmap(plot_vals, yticklabels=False, xticklabels=False, ax=axes[0], annot=annot, cbar=False, linewidth=0.5, cmap=cmap)
 
-                axes[0].set_xlabel("Input", fontdict={"fontsize": 16, "fontname": "cmr10"})
+                axes[0].set_xlabel("Input", fontdict={"fontsize": 10})
                 # Output
                 y[i, j] = 0
                 sns.heatmap(np.sign(y), yticklabels=False, xticklabels=False, ax=axes[1], annot=annot, cbar=False, linewidth=0.5, cmap=ListedColormap(["#A5Ab81", "#DBDDCD"]))
 
-                axes[1].set_xlabel("Output", fontdict={"fontsize": 16, "fontname": "cmr10"})
+                axes[1].set_xlabel("Output", fontdict={"fontsize": 10})
                 img.append(fig2img(fig))
                 shift_num = stride
                 if (j * (stride) + kernel_sz) >= (input_sz + 2 * padding_sz):
@@ -75,12 +75,12 @@ input_sz = 3
 kernel_sz = 3
 stride = 2
 padding_sz = 1
-duration = 1
+duration = 0.4
 layer_type = "transposed_conv"
 # layer_type = 'conv'
 
 
-gif_name = layer_type + "_S" + str(stride) + "P" + str(padding_sz) + ".gif"
+gif_name = layer_type + "_K" + str(kernel_sz) + "S" + str(stride) + "P" + str(padding_sz) + ".gif"
 actual_stride = stride
 actual_padding_sz = padding_sz
 
